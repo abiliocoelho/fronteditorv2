@@ -38,7 +38,7 @@ export function MEditor({
     },
     {
       tabName: "markdown",
-      displayName: "MDs",
+      displayName: "MD",
     },
   ];
 
