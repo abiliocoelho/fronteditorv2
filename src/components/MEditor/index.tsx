@@ -1,18 +1,18 @@
-import { useState } from 'react'
-import CustomEditor from '../CustomEditor'
-import Preview from '../Preview'
+import { useState } from "react";
+import CustomEditor from "../CustomEditor";
+import Preview from "../Preview";
 
-import { Tab, TabButton, TabButtonProps } from './TabButton'
-import { motion } from 'framer-motion'
-import { DropdownMenu } from '../DropdownMenu'
+import { motion } from "framer-motion";
+import { DropdownMenu } from "../DropdownMenu";
+import { Tab, TabButton, TabButtonProps } from "./TabButton";
 
-import logoSvg from '../../assets/logo.svg'
+import logoSvg from "../../assets/logo.svg";
 
 interface MEditorProps {
-  shouldFloat: boolean
-  isFullscreen: boolean
-  showLogo?: boolean
-  tabs?: TabButtonProps[] | null
+  shouldFloat: boolean;
+  isFullscreen: boolean;
+  showLogo?: boolean;
+  tabs?: TabButtonProps[] | null;
 }
 
 export function MEditor({
@@ -21,26 +21,26 @@ export function MEditor({
   shouldFloat = false,
   isFullscreen = false,
 }: MEditorProps) {
-  const [selectedTab, setSelectedTab] = useState<Tab>('html')
+  const [selectedTab, setSelectedTab] = useState<Tab>("html");
 
   const displayTabs = tabs || [
     {
-      tabName: 'html',
-      displayName: 'HTML',
+      tabName: "html",
+      displayName: "HTML",
     },
     {
-      tabName: 'css',
-      displayName: 'CSS',
+      tabName: "css",
+      displayName: "CSS",
     },
     {
-      tabName: 'javascript',
-      displayName: 'JS',
+      tabName: "javascript",
+      displayName: "JS",
     },
     {
-      tabName: 'markdown',
-      displayName: 'MD',
+      tabName: "markdown",
+      displayName: "MDs",
     },
-  ]
+  ];
 
   return (
     <motion.div className="w-screen h-screen overflow-hidden relative flex">
@@ -48,7 +48,13 @@ export function MEditor({
         <nav className="flex items-center gap-1 px-4 py-2 bg-[#13111b]">
           {showLogo && (
             <div className="text-center px-4">
-              <img src={logoSvg} className="w-4 inline mr-2" alt="" />
+              <a
+                href="https://abiliocoelho.dev"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img src={logoSvg} className="w-10 inline mr=4" alt="" />
+              </a>
             </div>
           )}
 
@@ -70,8 +76,8 @@ export function MEditor({
         <main
           className={
             !shouldFloat
-              ? 'flex flex-1 overflow-hidden relative mt-3 h-screen'
-              : ''
+              ? "flex flex-1 overflow-hidden relative mt-3 h-screen"
+              : ""
           }
         >
           <CustomEditor language={selectedTab} className="absolute inset-0" />
@@ -80,5 +86,5 @@ export function MEditor({
 
       <Preview isFloating={shouldFloat} fullscreen={isFullscreen} />
     </motion.div>
-  )
+  );
 }
