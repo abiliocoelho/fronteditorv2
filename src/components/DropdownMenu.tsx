@@ -1,57 +1,57 @@
-import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useContext } from 'react'
+import { Menu, Transition } from "@headlessui/react";
+import { Fragment, useContext } from "react";
 
-import { ArchiveBox, Gear } from 'phosphor-react'
-import { EditorContentContext } from '../contexts/EditorContentContext'
+import { ArchiveBox, Gear } from "phosphor-react";
+import { EditorContentContext } from "../contexts/EditorContentContext";
 
-import JSZip from 'jszip'
-import { saveAs } from 'file-saver'
-import pretty from 'pretty'
+import { saveAs } from "file-saver";
+import JSZip from "jszip";
+import pretty from "pretty";
 
-const zip = new JSZip()
+const zip = new JSZip();
 
 export function DropdownMenu() {
-  const { app } = useContext(EditorContentContext)
+  const { app } = useContext(EditorContentContext);
 
   function addScriptsToParsedHtmlHead(parsed: Document) {
-    const head = parsed.querySelector('head')!
+    const head = parsed.querySelector("head")!;
 
-    const script = document.createElement('script')
-    script.type = 'text/javascript'
-    script.src = './index.js'
-    script.defer = true
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "./index.js";
+    script.defer = true;
 
-    const style = document.createElement('link')
-    style.rel = 'stylesheet'
-    style.href = './index.css'
+    const style = document.createElement("link");
+    style.rel = "stylesheet";
+    style.href = "./index.css";
 
-    head.appendChild(script)
-    head.appendChild(style)
+    head.appendChild(script);
+    head.appendChild(style);
 
-    return parsed
+    return parsed;
   }
 
   async function handleDownloadAsZip() {
-    const parser = new DOMParser()
+    const parser = new DOMParser();
 
-    const parsedHTML = parser.parseFromString(app.html, 'text/html')
+    const parsedHTML = parser.parseFromString(app.html, "text/html");
 
-    const htmlWithScripts = addScriptsToParsedHtmlHead(parsedHTML)
+    const htmlWithScripts = addScriptsToParsedHtmlHead(parsedHTML);
 
-    const doctype = '<!DOCTYPE html>'
+    const doctype = "<!DOCTYPE html>";
 
     zip.file(
-      'index.html',
-      pretty(doctype + htmlWithScripts.documentElement.outerHTML),
-    )
+      "index.html",
+      pretty(doctype + htmlWithScripts.documentElement.outerHTML)
+    );
 
-    zip.file('index.css', app.css)
-    zip.file('index.js', app.javascript)
-    zip.file('index.md', app.markdown)
+    zip.file("index.css", app.css);
+    zip.file("index.js", app.javascript);
+    zip.file("index.md", app.markdown);
 
-    const content = await zip.generateAsync({ type: 'blob' })
+    const content = await zip.generateAsync({ type: "blob" });
 
-    saveAs(content, `frontend-editor-${new Date().toISOString()}.zip`)
+    saveAs(content, `prof.AbilioCoelho-${new Date().toISOString()}.zip`);
   }
 
   return (
@@ -77,7 +77,7 @@ export function DropdownMenu() {
                 {({ active }) => (
                   <button
                     className={`${
-                      active ? 'bg-green-400 text-gray-900' : 'text-gray-900'
+                      active ? "bg-green-400 text-gray-900" : "text-gray-900"
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                     onClick={handleDownloadAsZip}
                   >
@@ -91,5 +91,5 @@ export function DropdownMenu() {
         </Transition>
       </Menu>
     </div>
-  )
+  );
 }
